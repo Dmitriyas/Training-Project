@@ -1,0 +1,66 @@
+<apex:page controller="ProductListController" sidebar="false">  
+  <apex:slds />
+      <!-- HEADING AREA -->
+     <div class="slds-page-header__title slds-align_absolute-center" style="margin: 15px 0px 15px 0px;">
+             <div class="slds-col">Product List</div>
+    </div>
+       <div class="slds-grid slds-border_top slds-border_bottom slds-align_absolute-center" style="height: 30px; ">
+           <div class="slds-col slds-text-title_caps slds-size_1-of-8 ">Image</div>
+           <div class="slds-col slds-text-title_caps slds-size_1-of-8" style=" width: 200px;"/>
+           <div class="slds-col slds-text-title_caps slds-size_1-of-8" style=" width: 290px;">Title</div>
+           <div class="slds-col slds-text-title_caps slds-size_3-of-8">Description</div>    
+           <div class="slds-col slds-text-title_caps slds-size_1-of-8" style="width: 75px;" >Cost</div> 
+           <div class="slds-col slds-text-title_caps slds-size_1-of-8" style="width: 85px;" /> 
+      </div>
+    <!-- / HEADING AREA -->
+    <!---BODY--->
+        <section>
+        <apex:form >
+        <apex:repeat value="{!records}" var="record">
+            <!---Image--->
+        <div class="slds-grid slds-border_bottom">
+        <div  class = "slds-col slds-size_1-of-8 " style="margin: 10px 20px 10px 0px;  width: 141px; heigth: 90px;">
+            <apex:image value="{!record.Image_URL__c}" />  
+        </div>
+          <!---Name Of Product--->
+          <div class="slds-size_1-of-8" style="width: 205px;" >
+          <div class="slds-col slds-align_absolute-center" style="padding-top: 90px; "> 
+             <div class="slds-theme_default">
+             <apex:outputLink value="{!URLFOR($Page.DetailViewProductVisualForce, null, [id=record.Id])}" target="_blank">{!record.Name}</apex:outputLink>
+            </div>
+           </div>
+          </div>
+        <!---Title--->
+              <div class="slds-col slds-size_1-of-8 slds-is-relative" style="padding-top: 25px; padding-right: 15px; width: 290px; "  >
+              <div>
+                  <apex:outputText value="{! record.Title__c}"/>
+             </div>
+            </div>
+        <!---Description--->
+            <div class="slds-col slds-size_3-of-8" style="padding-top: 40px ; width: 495px;"  > 
+            <div class="slds-size_1-of-1">            
+                <apex:outputText value="{! IF(LEN(record.Product_Description__c) > 100, LEFT(record.Product_Description__c, 97) + '...', record.Product_Description__c)}"/>  
+            </div>
+             <!---Link More---> 
+                <div class="slds-theme_default" style = "padding-left: 180px; margin-top: -19px;">           
+                      <apex:outputLink value="{!URLFOR($Page.DetailViewProductVisualForce, null, [id=record.Id])}" target="_blank">More</apex:outputLink>       
+               </div>
+              </div>
+            <!---Cost--->
+              <div class="slds-col slds-size_1-of-8 " style="padding-top: 65px; width: 75px; ">
+              <div>
+                 <apex:outputText value="{! record.Unit_Price__c}$"/>
+              </div>
+             </div>
+        <!---Link Buy-->
+        <div class="slds-col slds-size_1-of-8 "  style=" padding-top: 65px; padding-left: 10px;"  >
+              <div class="slds-button slds-button_brand">
+                  <apex:outputLink value="{!URLFOR($Page.PurchaseAndRegistrationOrderVisualForce, null, [id=record.Id])}" target="_blank">Buy</apex:outputLink>  
+             </div>
+            </div>   
+           </div>  
+            <!---/BODY--->
+          </apex:repeat> 
+         </apex:form>
+        </section>
+</apex:page>

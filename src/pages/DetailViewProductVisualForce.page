@@ -1,0 +1,52 @@
+<apex:page controller="PurchaseAndRegistrationOrder" showHeader="true" sidebar="false">
+  <apex:slds />
+        <!---Head--->
+                    <apex:form >                     
+                    <div class="slds-page-header__title slds-align_absolute-center slds-text-align_center" 
+                         style="padding: 20px 0px 20px 0px;  background-color: #e6ecff;">
+                    <div class="slds-col">{! productTable.Name}</div>
+                 </div>             
+        <!---/Head--->
+                      
+        <!---Body--->
+        <section>
+            <!---Image--->
+        <div class="slds-grid slds-gutters slds-size_1-of-1 slds-align_absolute-center" style="height: 400px;">
+            <div class="slds-col slds-size_1-of-2" style=" height: 400px;">
+                <div  class = "slds-col " style="padding: 15px 40px 10px 170px;  width: 490px;">
+                <apex:image value="{! productTable.Image_URL__c}" />  
+        </div>     
+       </div>
+             <!---Units Available--->
+                <div class="slds-col slds-size_1-of-2" style="padding-top: 20px; height: 400px;">
+                  <div class="slds-col" style=" height: 40px;">
+                    <span class="slds-text-title_caps">Amount: </span><br/>
+                    <apex:outputText value="{! productTable.Units_Available__c}"/>                    
+                 </div>
+               <!---Title--->
+                <div class="slds-col" style="padding-top: 20px;  height: 120px;">
+                    <span class="slds-text-title_caps">Title:</span><br/>
+                    <apex:outputText value="{! productTable.Title__c}"/>                        
+                </div>
+                 <!---Description--->
+                <div class="slds-col" style="padding-top: 20px;  height: 220px;">
+                    <span class="slds-text-title_caps">Description:</span><br/>
+                    <apex:outputText value="{!productTable.Product_Description__c}"/>          
+                </div>
+               </div>  
+              </div>          
+        </section>     
+        <!---/Body--->
+        <!---FOOTER--->
+        <footer>
+             <div class="slds-align_absolute-center slds-text-align_center" 
+                         style=" padding-bottom: 20px;  background-color: #e6ecff;">
+                 <div style="padding-top: 20px;">
+                     <button class="slds-button slds-button_neutral"><apex:outputLink value="https://c.ap8.visual.force.com/apex/ProductListVisualForce?core.apexpages.request.devconsole=1">To Shopping</apex:outputLink></button>
+                     <button class="slds-button slds-button_brand"><apex:outputLink value="{!URLFOR($Page.PurchaseAndRegistrationOrderVisualForce, null, [id=PageId])}" target="_top">Buy</apex:outputLink></button>
+                 </div>             
+            </div>            
+        </footer>
+      <!---/FOOTER--->
+ </apex:form>
+</apex:page>

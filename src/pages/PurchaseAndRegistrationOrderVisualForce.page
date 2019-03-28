@@ -1,0 +1,88 @@
+<apex:page controller="PurchaseAndRegistrationOrder" sidebar="false">
+  <apex:slds />
+        <!---Head--->        
+        <div class="slds-grid">  
+                  <div class="slds-col slds-size_1-of-2 slds-border_bottom" style=" margin: -10px; background-color: #e6ecff;">
+                       <div class="slds-page-header__title slds-align_absolute-center slds-text-align_center" 
+                         style="padding: 20px 0px 20px 0px; ">
+             <div class="slds-col">Contact Information</div>
+            </div>                       
+        </div>            
+             <div class="slds-col slds-size_1-of-2 slds-border_bottom" style=" margin: -10px; width: 694px; background-color: #e6ecff;">
+                       <div class="slds-page-header__title slds-align_absolute-center slds-text-align_center" 
+                         style="padding: 20px 0px 20px 0px; ">
+             <div class="slds-col">Product Information</div>
+            </div>                       
+        </div>
+            </div>            
+        <!---/Head---> 
+        
+        <!---Body--->
+        
+        <!---Left Half--->
+     <apex:form >
+         <apex:pageMessages />
+      <div class="slds-grid">
+          <div class="slds-col slds-size_1-of-2" style="margin-top: 10px; height: 300px;">
+              <div class="slds-col" style="height: 200px; padding-top: 40px; padding-left: 230px;">
+                 <span>Email: <apex:inputField value="{!contCreate.Email}" style="margin-left: 10px; margin-bottom: 15px;"/></span><br/>                   
+               <span style="margin-left: -29px; ">FirstName: <apex:inputField value="{!contCreate.FirstName}" style="margin-left: 10px; margin-bottom: 15px; "/></span><br/>
+                   <div style=" margin-left: -30px;"> 
+               <span> LastName: <abbr class="slds-required">*</abbr> <apex:inputField value="{!contCreate.LastName}" style="margin-left: 76px; margin-top: -20px;"/></span>
+                    </div>
+                </div>            
+            </div>  
+          <!---/Left Half--->
+          
+          <!---Right Half--->
+            <div class="slds-col slds-size_1-of-2" style="margin-top: 10px; height: 300px;">     
+                <div class="slds-col" style=" height: 40px; padding-top: 40px; padding-left: 230px;">
+                  <span>Product Name: <apex:outputText value="{! productTable.Name}" style="font-weight: bold; font-size: 12px; margin-left: 5px;"/></span> <br/>                   
+                </div>               
+                <div class="slds-col" style="padding-top: 30px;  padding-left: 290px;">
+                    <span>Cost: 
+                      <apex:outputText value="{!productTable.Unit_Price__c}$" style="margin-left: 5px;"/>
+                 </span><br/>                   
+                </div>               
+                <div class="slds-col" style="padding-top: 20px;  padding-left: 250px;">
+                    <span>Unit Count:<apex:inputText value="{! UnitCount}" style="margin-left: 5px;"  onchange="totalAmount();" id="unitsCountSelected" onkeydown="if(event.keyCode==13){this.blur();actionFunction();}" />
+                                    </span><br/>                                      
+                </div>                
+                 <div class="slds-col" style="padding-top: 20px;  padding-left: 235px;">
+                    <span>Total Amount: <apex:outputText id="TotalSum" style="margin-left: 5px;"/><apex:outputText value=" $"/></span><br/>                                       
+                </div>  
+            </div>            
+        </div>
+         <!---/Right Half--->
+        <!---/Body--->
+         
+         <!---JS Code for calculating price of product--->
+         <script>
+          function changeTotalAmountOnRightHalfSide() {                            
+          var unitsChange = document.getElementById('{!$Component.unitsCountSelected}').value;                                                             
+          if(unitsChange > {! productTable.Units_Available__c} ) {
+          unitsChange = {! productTable.Units_Available__c};
+          document.getElementById('{!$Component.unitsCountSelected}').value = unitsChange;                                   
+          }
+          document.getElementById('{!$Component.TotalSum}').innerHTML = unitsChange * {! productTable.Unit_Price__c};
+          }
+                        
+           function totalAmount() {                             
+           var unitsChange = document.getElementById('{!$Component.unitsCountSelected}').value;
+           document.getElementById('{!$Component.TotalSum}').innerHTML = unitsChange * {! productTable.Unit_Price__c};
+           }
+           </script>    
+
+         <!---FOOTER--->
+        <footer>
+             <div class="slds-align_absolute-center slds-text-align_center slds-border_bottom slds-border_top" 
+                         style=" padding-bottom: 20px; background-color: #e6ecff;">
+                 <div style="padding-top: 20px;">
+                     <button class="slds-button slds-button_neutral"><apex:outputLink value="https://c.ap8.visual.force.com/apex/ProductListVisualForce?core.apexpages.request.devconsole=1">To Shopping</apex:outputLink></button>
+                     <button class="slds-button slds-button_brand"><apex:commandLink value="Buy"  action="{!buyItem}"/></button>               
+                 </div>               
+            </div>
+        </footer>
+         <!---/FOOTER--->        
+        </apex:form>
+</apex:page>
